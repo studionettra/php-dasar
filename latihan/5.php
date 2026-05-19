@@ -35,7 +35,7 @@ if (isset($_POST['tampil'])) {
 
     <form action="" method="post">
         <label for="">Sisi 1</label>
-        <input type="number" name="sisi1"><br><br>
+        <input type="number" name="sisi1" step="any"><br><br>
         <button type="submit" name="tampil">Hasilkan</button>
 
 
