@@ -39,8 +39,8 @@ if (isset($_GET['delete'])) {
                     <tr>
                         <th>No</th>
                         <th>Name</th>
-                        <th>Status</th>
                         <th>Description</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -51,8 +51,8 @@ if (isset($_GET['delete'])) {
                         <tr>
                             <td><?php echo $index + 1 ?></td>
                             <td><?php echo $rows['name'] ?></td>
-                            <td><?php echo getStatus($rows['is_active'])?></td>
                             <td><?php echo $rows['description'] ?></td>
+                            <td><?php echo getStatus($rows['is_active'])?></td>
                             <td>
                                 <a href="?page=create-role&edit=<?php echo $rows['id'] ?>" class="btn btn-success">Edit</a>
                                 <form action="?page=role&delete=<?php echo $rows['id'] ?>" method="post" class="d-inline">
