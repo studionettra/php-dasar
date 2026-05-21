@@ -21,7 +21,7 @@ $rEdit = mysqli_fetch_assoc($query);
 if (isset($_POST['edit'])) {
     $name = htmlspecialchars($_POST['name']);
     $is_active = ($_POST['is_active']);
-    $description = $_POST['descriptoin'];
+    $description = $_POST['description'];
 
     mysqli_query($koneksi, "UPDATE roles SET name='$name', is_active='$is_active', description='$description' WHERE id='$id'");
     header('location:?page=role');
@@ -45,9 +45,9 @@ if (isset($_POST['edit'])) {
                 </div>
                 <div class="col-12">
                     <label for="" class="form-label">Status</label>
-                    <select class="form-select" aria-label="Default select example">                        
+                    <select name="is_active" class="form-select" aria-label="Default select example">                        
                         <option value="1"  <?= $id ? ($rEdit['is_active'] == 1) ? 'selected' : '' : 'selected' ?>>Active</option>
-                        <option value="0"  <?= $id ? ($rEdit['is_active'] == 0) ? 'selected' : '' : 'selected' ?>>Inactive</option>
+                        <option value="0"  <?= $id ? ($rEdit['is_active'] == 0) ? 'selected' : '' : '' ?>>Inactive</option>
                     </select>                   
                 </div>
                 <div class="col-12">

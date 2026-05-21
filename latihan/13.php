@@ -26,8 +26,10 @@ function lpTabung($r, $t){
     return 2 * M_PI * $r * ($r + $t);
 }
 //BOLA
-function volumeBola($s)
-    return 4/3 * 
+function volumeBola($s){
+return 4/3 * M_PI * pow($r, 3); 
+}
+    
 
 ?>
 
