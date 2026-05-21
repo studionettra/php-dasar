@@ -2,27 +2,24 @@
 
 session_start();
 session_regenerate_id();
+include "config/connect.php";
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
-    $password = $_POST['password'];
-    $dataNama = "Budi Hartono";
-    $dataEmail = "budi@gmail.com";
-    $dataPassword = "12345678";
+    $password = sha1($_POST['password']);
 
-    if ($email == $dataEmail && $password == $dataPassword) {
-        $_SESSION['NAMA'] = $dataNama;
+    $login = mysqli_query($koneksi, "SELECT * FROM users WHERE email='$email'");
+    $rowLogin = mysqli_fetch_assoc($login);
+
+
+    if ($email == $rowLogin['email'] && $password == $rowLogin['password']) {
+        $_SESSION['NAMA'] = $rowLogin['name'];
         header("location:main.php?page=dashboard"); //tidak boleh ada spasi setelah location:
     } else {
         header("location:index.php");
     }
 }
 ?>
-
-
-
-
-
 
 
 <!DOCTYPE html>
