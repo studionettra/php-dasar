@@ -1,12 +1,15 @@
 <?php
 
 
-$selectUser = mysqli_query($koneksi, "SELECT * FROM users");
+$selectUser = mysqli_query($koneksi, "SELECT users.name, users.email, users.id FROM users");
 $rows = mysqli_fetch_all($selectUser, MYSQLI_ASSOC);
 
+// print_r($rows['2']);
+// die;
 
-if(isset($_GET['ideDelete'])){
-    $id = $_GET['idDelete'] ?? 0;
+
+if(isset($_GET['idDelete'])){
+    $id = $_GET['idDelete'];
     $delete = mysqli_query($koneksi, "DELETE FROM users WHERE id='$id'");
     header("location:?page=user");
     exit();
@@ -16,14 +19,12 @@ if(isset($_GET['ideDelete'])){
 
 
 <div class="card">
-    <div class="card-header text-center">
-        <h2 class="card-title">
-            Users
-        </h2>
-    </div>
+    <h5 class="card-header">      
+           User Data       
+    </h5>
     <div class="card-body">
-        <div class="mb-2">
-            <a href="?page=user-create-edit" class="btn btn-primary">Create</a>
+        <div class="mb-2" align="end">
+            <a href="?page=user-create-edit" class="btn btn-primary">Create New User</a>
         </div>
         <div class="table-responsive">
 
@@ -39,7 +40,7 @@ if(isset($_GET['ideDelete'])){
             ?>
 
 
-            <table class="table table-bordered text-center">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>No</th>

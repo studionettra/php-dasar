@@ -4,6 +4,20 @@ session_start();
 session_regenerate_id();
 include "config/connect.php";
 
+
+
+// VARIABLE SISTEM/SUPRGLOBAL PHP
+// $ selalu diawali dolar
+// $_POST :['login', 'mail', 'password']
+// isset : ngecek data tidak kosong
+// !empty : kosong, tidak kosong
+// $_SESSSION : nyimpen data di dalam memory browser
+// $_COOKIES : nyimpen data di dalam memory browser
+
+
+
+
+
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = sha1($_POST['password']);
@@ -12,9 +26,9 @@ if (isset($_POST['login'])) {
     $rowLogin = mysqli_fetch_assoc($login);
 
 
-    if ($email == $rowLogin['email'] && $password == $rowLogin['password']) {
+    if ($email == $rowLogin['email'] && $password == $rowLogin['password']) { 
         $_SESSION['NAMA'] = $rowLogin['name'];
-        header("location:main.php?page=dashboard"); //tidak boleh ada spasi setelah location:
+        header("location:main.php?page=dashboard"); //tidak boleh ada spasi setelah location: header:adalajh redirection
     } else {
         header("location:index.php");
     }

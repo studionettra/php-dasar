@@ -64,7 +64,7 @@
                     <!-- Dashboard -->
                     <li class="menu-item active">
                         <a href="main.php?page=dashboard" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <i class="menu-icon tf-icons bx bx-user"></i>
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
                     </li>
@@ -72,6 +72,12 @@
                         <a href="?page=user" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Users</div>
+                        </a>
+                    </li>
+                     <li class="menu-item">
+                        <a href="?page=role" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-collection"></i>
+                            <div data-i18n="Basic">Roles</div>
                         </a>
                     </li>
                     

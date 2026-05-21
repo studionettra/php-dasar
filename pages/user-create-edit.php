@@ -3,103 +3,122 @@
 if (isset($_POST['save'])) {
     $name = htmlspecialchars($_POST['name']);
     $email = htmlspecialchars($_POST['email']);
-    $pass = $_POST['password'];
-    $confrim = $_POST['password_confirm'];
-    $passSha = sha1($pass);
+    $password = $_POST['password'];
+    $confrim_password = $_POST['password_confirm'];
+    $passSha = sha1($password);
 
-    if ($pass == $confrim) {
-        $cekEmail = mysqli_query($koneksi, "SELECT * FROM users WHERE email='$email'");
 
-        if (mysqli_num_rows($cekEmail) > 0) {
-            header('location:?page=user-create-edit');
-        }
+    // Password tidak sama & email sudah ada
 
-        mysqli_query($koneksi, "INSERT INTO users (name, email, password) VALUES ('$name','$email', '$passSha')");
-
-        header('location:?page=user&status=success');
-        exit();
-    } else {
-        header('location:?page=user-create-edit');
+    if ($password !== $confrim_password) {
+        header("location:?page=user-create-edit&status=password_not_match");
         exit();
     }
-}
 
-if (isset($_GET['idEdit'])) {
-    $id = $_GET['idEdit'] ?? '';
-    $selectUser = mysqli_query($koneksi, "SELECT * FROM users WHERE id='$id'");
-    $rEdit = mysqli_fetch_assoc($selectUser);
+    $cekEmail = mysqli_query($koneksi, "SELECT id FROM users WHERE email='$email'");
 
-    if (isset($_POST['edit'])) {
-        $name = htmlspecialchars($_POST['name']);
-        $email = htmlspecialchars($_POST['email']);
-        $pass = $_POST['password'];
-        $confrim = $_POST['password_confirm'];
-        $passSha = sha1($pass);
 
-        if ($pass == '') {
-            mysqli_query($koneksi, "UPDATE users SET name='$name', email='$email' WHERE id='$id'");
-            header('location:?page=user');
-            exit();
-        } else {
-            if ($pass == $confrim) {
-                mysqli_query($koneksi, "UPDATE users SET name='$name', email='$email', password='$passSha' WHERE id='$id'");
-                header('location:?page=user');
-                exit();
-            }
-        }
-        // if ($updateUser) {
-        //     header('location:?page=user');
-        //     exit();
-        // }
+    if (mysqli_num_rows($cekEmail) > 0) {
+        header('location:?page=user-create-edit&status=email_exists');
+        exit();
     }
+
+    mysqli_query($koneksi, "INSERT INTO users (name, email, password) VALUES ('$name','$email', '$passSha')");
+    header('location:?page=user&status=success');
 }
 
+
+
+$id = $_GET['idEdit'] ?? '';
+// $id = isset($_GET['idEdit']) ? $_GET['idEdit'] : ''; //pilih salah satu
+$selectUser = mysqli_query($koneksi, "SELECT * FROM users WHERE id='$id'");
+$rEdit = mysqli_fetch_assoc($selectUser);
+
+
+if (isset($_POST['edit'])) {
+    $name = htmlspecialchars($_POST['name']);
+    $email = htmlspecialchars($_POST['email']);
+    $password = $_POST['password'];
+    $confrim_password = $_POST['password_confirm'];
+    $passSha = sha1($password);
+
+    if (empty($password)) {
+        mysqli_query($koneksi, "UPDATE users SET name='$name', email='$email' WHERE id='$id'");
+        header('location:?page=user');
+        exit();
+    }
+
+    if ($password !== $confrim_password) {
+        header('location:?page=user-create-edit&idEdit=' . $id . '&status+password_not_match');
+        exit();
+    }
+    mysqli_query($koneksi, "UPDATE users SET name='$name', email='$email', password='$passSha' WHERE id='$id'");
+    header('location:?page=user');
+}
+$status = $_GET['status'] ?? "";
 ?>
 
 
 
+
 <div class="card">
-    <div class="card-header">
 
-        <h2 class="card-tittle text-center">
-            <?php echo isset($_GET['idEdit']) ? 'Edit' : 'Create' ?> User
-        </h2>
+    <h5 class="card-header">
+        <?php echo isset($_GET['idEdit']) ? 'Edit' : 'Create New' ?> User
+    </h5>
 
+    <div class="card-body">
+        <?php if ($status == 'password_not_match'): ?>
+            <div class="alert alert-warning alert-dismissible  fade show" role="alert">
+                <strong>Erorr!</strong> Pasword do not match.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" arial-label="Close"></button>
+            </div>
+            <div class="alert alet-warning">
+            </div>
+        <?php endif ?>
+        <?php if ($status == 'email_exists') {
+            echo '<div class="alert alert-warning alert-dimissible  fade show" role="alert">
+                <strong>Erorr!</strong> This email is already registreted.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" arial-label="Close"></button>
+                </div>';
+        }
+        ?>
 
-        <div class="card-body">
+        <form action="" method="post">
 
-            <form action="" method="post">
-
-                <div class="row">
-                    <div class="col-6">
-                        <label for="" class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control" value="<?php echo isset($_GET['idEdit']) ? $rEdit['name'] : '' ?>" required>
-                    </div>
-
-                    <div class="col-6">
-                        <label for="" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" value="<?php echo isset($_GET['idEdit']) ? $rEdit['email'] : '' ?>" required>
-                    </div>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <label for="" class="form-label">Name *</label>
+                    <input type="text" name="name" class="form-control" value="<?php echo isset($_GET['idEdit']) ? $rEdit['name'] : '' ?>" placeholder="Enter your Name" required>
                 </div>
 
-                <div class="row mt-3">
-                    <div class="col-6">
-                        <label for="" class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control">
-                    </div>
-                    <div class="col-6">
-                        <label for="" class="form-label">Password Confrim</label>
-                        <input type="password" name="password_confirm" class="form-control">
-                    </div>
+                <div class="col-6">
+                    <label for="" class="form-label">Email *</label>
+                    <input type="email" class="form-control" name="email" value="<?php echo isset($_GET['idEdit']) ? $rEdit['email'] : '' ?>" placeholder="Ex:admin@gmail.com" required>
                 </div>
-                <div class="text-end mt-3">
-                    <button type="submit" class="btn btn-primary" name="<?php echo isset($_GET['idEdit']) ? 'edit' : 'save' ?>"><?php echo isset($_GET['idEdit']) ? 'Edit' : 'Save' ?></button>
-                    <a href="?page=user" class="btn btn-secondary">Cancle</a>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-6">
+                    <label for="" class="form-label">Password *</label>
+                    <input type="password" name="password" class="form-control" placeholder="Enter Password" <?= $id ? '' : 'required'  ?>>
                 </div>
+                <div class="col-6">
+                    <label for="" class="form-label">Password Confrim *</label>
+                    <input type="password" name="password_confirm" class="form-control" placeholder="Enter Password Confirm" <?= $id ? '' : 'required'  ?>>
+                </div>
+                <div class="mt-2" text-secondary small>
+                    <p>Leave blank if you dont want to change the password</p>
+                </div>
+            </div>
+            <div class="text-end mt-3">
+                <button type="submit" class="btn btn-primary" name="<?php echo isset($_GET['idEdit']) ? 'edit' : 'save' ?>"><?php echo isset($_GET['idEdit']) ? 'Save Change' : 'Create' ?></button>
+                <a href="?page=user" class="btn btn-secondary">Cancle</a>
+            </div>
 
-            </form>
+        </form>
 
-        </div>
     </div>
+
 </div>
 </div>
