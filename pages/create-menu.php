@@ -26,7 +26,7 @@ $rEdit = mysqli_fetch_assoc($query);
 
 
 if (isset($_POST['edit'])) {
-    $parent_id = $_POST['parent_id'] ?: 'NULL' ;
+    $parent_id = $_POST['parent_id'] ?: 'NULL';
     $name = htmlspecialchars($_POST['name']);
     $url = $_POST['url'];
     $icon = $_POST['icon'];
@@ -34,7 +34,7 @@ if (isset($_POST['edit'])) {
     $is_active = $_POST['is_active'];
 
     // mysqli_query($koneksi, "UPDATE menus SET parent_id='$parent_id' name='$name', url='$url', icon='$icon', sort_order='$sort_order' is_active='$is_active', WHERE id='$id'");
-    
+
 
     mysqli_query($koneksi, "UPDATE menus SET 
     parent_id=$parent_id,
@@ -69,13 +69,13 @@ $rowParent = mysqli_fetch_all($queryParent, MYSQLI_ASSOC);
                 <div class="col-6 mb-2">
                     <label for="" class="form-label">Parent</label>
                     <select name="parent_id" class="form-select" aria-label="Default select example">
-                        <option value="">Select One</option>  
-                        <?php foreach ($rowParent as $parent):?>                                               
-                         <option value="<?=$parent['id']?>"><?= $parent['name']?></option> 
-                         <?php endforeach ?>                                          
+                        <option value="">Select One</option>
+                        <?php foreach ($rowParent as $parent): ?>
+                            <option value="<?= $parent['id'] ?>"> <?= $parent['name'] ?></option>
+                        <?php endforeach ?>
                     </select>
-                </div>             
-                               
+                </div>
+
                 <div class="col-6 mb-2">
                     <label for="" class="form-label">Url *</label>
                     <input type="text" name="url" class="form-control" value="<?php echo isset($_GET['edit']) ? $rEdit['url'] : '' ?>" placeholder="Enter URL" required>

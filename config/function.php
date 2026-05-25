@@ -12,3 +12,17 @@ function statusSuccess($status, $location)
 
 </script>";
 }
+
+function statusFailed($status, $location)
+{
+    return "<div class='alert alert-danger' role='alert'>
+  $status
+</div>
+<script>
+    setTimeout(function() {
+    window.location.href = '$location';
+}, 5000);
+
+</script>";
+}
+

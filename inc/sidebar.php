@@ -99,7 +99,7 @@ $menus = mysqli_query($koneksi, "SELECT * FROM menus WHERE parent_id IS NULL AND
                     </li> 
                     <?php endforeach ?>                   
                 </ul>
-                <!-- kalau sub menu tidak ada -->
+                <!-- if sub menu not ada -->
             <?php else: ?>
                 <a href="?page=<?= $menu['url'] ?>" class="menu-link">
                     <i class="menu-icon tf-icons bx <?= $menu['icon'] ?>"></i>
