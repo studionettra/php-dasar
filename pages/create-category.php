@@ -15,7 +15,7 @@ if (isset($_POST['save'])) {
 
     $query = mysqli_query($koneksi, "INSERT INTO categories (category_name, is_active) VALUES ('$category_name','$is_active')");
     if ($query) {
-        header('location:?page=category&status=success');
+        header('location:?page=category&status=created');
     }
 }
 
@@ -32,7 +32,7 @@ if (isset($_POST['edit'])) {
     WHERE category_name='$category_name' AND id != '$id'");
 
     if (mysqli_num_rows($queryCek) > 0) {
-        header("location:?page=create-category&edit=$   id&status=category-exist");
+        header("location:?page=create-category&edit=$id&status=category-exist");
         exit();
     }
 
@@ -42,7 +42,7 @@ if (isset($_POST['edit'])) {
     WHERE id='$id'");
 
     if ($query) {
-        header('location:?page=category&status=success');
+        header('location:?page=category&status=edited');
     }
 }
 ?>
@@ -57,10 +57,29 @@ if (isset($_POST['edit'])) {
     <div class="card-body">
 
         <?php
-        if (isset($_GET['status']) && $_GET['status']  == 'category-exist') {
-            $status = "Category Name Already Exist!";
-            $location = "?page=create-category";
-            echo statusFailed($status, $location);
+
+        if (isset($_GET['status'])) {
+
+            if ($_GET['status'] == 'created') {
+
+                $status = "Category was Created";
+                echo statusSuccess($status, "?page=category");
+            } elseif ($_GET['status'] == 'edited') {
+
+                $status = "Category Have Been Edited";
+                echo statusSuccess($status, "?page=category");
+            }
+        }
+
+        if (isset($_GET['status'])) {
+
+            if ($_GET['status'] == 'category-exist') {
+
+                $status = "Category Name Already Exist!";
+                $location = "?page=create-category";
+
+                echo statusFailed($status, $location);
+            }
         }
         ?>
 

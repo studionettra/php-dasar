@@ -26,11 +26,24 @@ if (isset($_GET['delete'])) {
 
             <?php
 
-            if (isset($_GET['status']) && $_GET['status']  == 'success') {
-                $status = "Category was Created";
-                $location = "?page=category";
-                echo statusSuccess($status, $location);
+            if (isset($_GET['status'])) {
+
+                if ($_GET['status'] == 'created') {
+
+                    $status = "Category was Created";
+                    echo statusSuccess($status, "?page=category");
+                } elseif ($_GET['status'] == 'edited') {
+
+                    $status = "Category Have Been Edited";
+                    echo statusSuccess($status, "?page=category");
+                }
             }
+
+            // if (isset($_GET['status']) && $_GET['status']  == 'success') {
+            //     $status = "Category was Created";
+            //     $location = "?page=category";
+            //     echo statusSuccess($status, $location);
+            // }
 
             ?>
 
@@ -39,7 +52,7 @@ if (isset($_GET['delete'])) {
                     <tr>
                         <th>No</th>
                         <th>Category Name</th>
-                        <th>Status</th>                        
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -49,7 +62,7 @@ if (isset($_GET['delete'])) {
                     ?>
                         <tr>
                             <td><?php echo $index + 1 ?></td>
-                            <td><?php echo $rows['category_name'] ?></td>                     
+                            <td><?php echo $rows['category_name'] ?></td>
                             <td><?php echo getStatus($rows['is_active']) ?></td>
                             <td>
                                 <a href="?page=create-category&edit=<?php echo $rows['id'] ?>" class="btn btn-success">Edit</a>
