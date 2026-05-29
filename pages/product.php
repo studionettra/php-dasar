@@ -57,7 +57,7 @@ if (isset($_GET['delete'])) {
                             <td><?php echo $index + 1 ?></td>
                             <td><?php echo $v['product_name'] ?></td>
                             <td><?php echo $v['category_name'] ?></td>
-                            <td><img src="assets/uploads/<?php echo $v['product_image'] ?>" width="150" alt=""></td>
+                            <td><img src="assets/uploads/<?php echo $v['product_image'] ?>" width="150" class="rounded" alt=""></td>
                             <td><?php echo $v['qty'] ?></td>
                             <td>Rp<?php echo number_format($v['price'], 2, ',', '.')   ?></td>
                             <td><?php echo $v['unit'] ?></td>

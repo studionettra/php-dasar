@@ -48,7 +48,7 @@ $products = mysqli_fetch_all($selectProduct, MYSQLI_ASSOC);
                             <span class="fs-5"><?= $count ?></span> Products
                         </div>
 
-                        <div class="flex-grow-1 mx-3">
+                        <div class="grow mx-3">
                             <input type="text" class="form-control" placeholder="Search">
                         </div>
 
@@ -73,7 +73,7 @@ $products = mysqli_fetch_all($selectProduct, MYSQLI_ASSOC);
                                             </small>
 
                                             <div class="mt-2">
-                                                <img src="assets/uploads/<?php echo $product['product_image'] ?>" class="img-fluid" style="max-height:150px; object-fit:cover;">
+                                                <img src="assets/uploads/<?php echo $product['product_image'] ?>" class="img-fluid rounded" style="max-height:150px; object-fit:cover;">
                                             </div>
 
                                         </div>
